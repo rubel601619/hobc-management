@@ -14,9 +14,7 @@ Domain Path: /lang
 defined('ABSPATH') || exit;
 
 // Include core files
-require_once plugin_dir_path(__FILE__) . 'inc/class-hobc-admin.php';
-require_once plugin_dir_path(__FILE__) . 'inc/class-hobc-player.php';
-require_once plugin_dir_path(__FILE__) . 'inc/functions.php';
+require_once plugin_dir_path(__FILE__) . 'autoload.php';
 
 // Initialize admin menus
 
@@ -34,6 +32,8 @@ final class HOBC_Management{
 
         // update permalink to postname
         register_activation_hook(__FILE__, [ $this, 'change_permalink_rewirte_rules' ] );
+
+        register_activation_hook(__FILE__, [ $this, 'enable_user_register' ] );
     }
 
     /**
@@ -43,6 +43,16 @@ final class HOBC_Management{
      */
     public function plugin_loaded(){
         new HOBC_Admin();
+    }
+
+    /**
+     * enable_user_register()
+     * This method enable Membership option so that user can register
+     * 
+     * @return void
+     */
+    public function enable_user_register(){
+        update_option('users_can_register', 1);
     }
 
     /**
