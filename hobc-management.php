@@ -31,9 +31,7 @@ final class HOBC_Management{
         add_filter( 'plugin_action_links', [ $this, 'add_action_links' ], 10, 2 );
 
         // update permalink to postname
-        register_activation_hook(__FILE__, [ $this, 'change_permalink_rewirte_rules' ] );
-
-        register_activation_hook(__FILE__, [ $this, 'enable_user_register' ] );
+        register_activation_hook(__FILE__, [ $this, 'plugin_activated' ] );
     }
 
     /**
@@ -46,25 +44,22 @@ final class HOBC_Management{
     }
 
     /**
-     * enable_user_register()
-     * This method enable Membership option so that user can register
-     * 
-     * @return void
-     */
-    public function enable_user_register(){
-        update_option('users_can_register', 1);
-    }
-
-    /**
      * change_permalink_rewirte_rules this method update the permalink to postname.
      * 
      * @return void
      */
-    public function change_permalink_rewirte_rules(){
+    public function plugin_activated(){
+        
         global $wp_rewrite;
+
+        // enable registration
+        update_option('users_can_register', 1);
+
+        // rewrite flush rule
         $wp_rewrite->set_permalink_structure('/%postname%/');
         $wp_rewrite->flush_rules();
 
+        // add role as a player
         add_role(
             'player',
             __('Player', 'hobc-management'),
