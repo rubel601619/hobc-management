@@ -12,3 +12,14 @@ Domain Path: /lang
 */
 
 defined('ABSPATH') || exit;
+
+// Include core files
+require_once plugin_dir_path(__FILE__) . 'inc/class-hobc-admin.php';
+require_once plugin_dir_path(__FILE__) . 'inc/class-hobc-player.php';
+require_once plugin_dir_path(__FILE__) . 'inc/functions.php';
+
+
+// Initialize admin menus
+add_action('plugins_loaded', function() {
+    new HOBC_Admin();
+});
