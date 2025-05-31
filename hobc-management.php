@@ -31,6 +31,9 @@ final class HOBC_Management{
         
         // add settings link below the plugin list
         add_filter( 'plugin_action_links', [ $this, 'add_action_links' ], 10, 2 );
+
+        // update permalink to postname
+        register_activation_hook(__FILE__, [ $this, 'change_permalink_rewirte_rules' ] );
     }
 
     /**
@@ -40,6 +43,17 @@ final class HOBC_Management{
      */
     public function plugin_loaded(){
         new HOBC_Admin();
+    }
+
+    /**
+     * change_permalink_rewirte_rules this method update the permalink to postname.
+     * 
+     * @return void
+     */
+    public function change_permalink_rewirte_rules(){
+        global $wp_rewrite;
+        $wp_rewrite->set_permalink_structure('/%postname%/');
+        $wp_rewrite->flush_rules();
     }
 
     public function add_action_links( $links, $file ){
@@ -83,4 +97,3 @@ if( !function_exists( 'hobc_management' ) ){
 
     hobc_management();
 }
-
