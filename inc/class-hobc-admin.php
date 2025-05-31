@@ -9,20 +9,75 @@ class HOBC_Admin {
     public function __construct() {
         add_action('admin_menu', [$this, 'register_admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
+        add_action('init', [$this, 'register_events']);
     }
 
     /**
-     * Register the plugin admin menu
+     * register custom post type for menu events
+     * 
+     * @return void
+     */
+    public function register_events() {
+        $labels = [
+            'name' => __('Events', 'hobc-management'),
+            'singular_name' => __('Event', 'hobc-management'),
+            'add_new' => __('Add New Event', 'hobc-management'),
+            'add_new_item' => __('Add New Event', 'hobc-management'),
+            'edit_item' => __('Edit Event', 'hobc-management'),
+            'new_item' => __('New Event', 'hobc-management'),
+            'view_item' => __('View Event', 'hobc-management'),
+            'search_items' => __('Search Events', 'hobc-management'),
+            'not_found' => __('No events found', 'hobc-management'),
+            'not_found_in_trash' => __('No events found in Trash', 'hobc-management'),
+            'menu_name' => __('Events', 'hobc-management'),
+        ];
+
+        $args = [
+            'labels' => $labels,
+            'public' => true,
+            'has_archive' => true,
+            'menu_position' => null,
+            'show_in_menu' => false,
+            'supports' => ['title', 'editor', 'thumbnail'],
+        ];
+
+        register_post_type('hobc_event', $args);
+    }
+
+    /**
+     * register_admin_menu()
+     * This methods register all the admin menu and submenu
+     * 
+     * @return void
      */
     public function register_admin_menu() {
         add_menu_page(
-            __('HOBC Management', 'hobc-management'), // Page title
-            __('HOBC', 'hobc-management'),            // Menu title
-            'manage_options',                         // Capability
-            'hobc-management',                        // Menu slug
-            [$this, 'render_dashboard'],              // Callback function
-            'dashicons-groups',                       // Icon
-            26                                        // Position
+            __('HOBC Management', 'hobc-management'),
+            __('HOBC', 'hobc-management'),
+            'manage_options',
+            'hobc-management',
+            [$this, 'render_dashboard'],
+            'dashicons-groups',
+            26 
+        );
+
+        // add submenu for general settings
+        add_submenu_page(
+            'hobc-management',
+            __('General', 'hobc-management'),
+            __('General', 'hobc-management'),
+            'manage_options',
+            'hobc-management',
+            [$this, 'render_dashboard']
+        );
+
+        // add submenu for events
+        add_submenu_page(
+            'hobc-management',
+            __('Events', 'hobc-management'),
+            __('Events', 'hobc-management'),
+            'manage_options',
+            'edit.php?post_type=hobc_event'
         );
     }
 
@@ -54,11 +109,15 @@ class HOBC_Admin {
     /**
      * Render the main dashboard page
      */
-    public function render_dashboard() {
-        echo '<div class="wrap">';
-        echo '<h1>' . esc_html__('HOBC Management Dashboard', 'hobc-management') . '</h1>';
-        echo '<p>' . esc_html__('Manage badminton players and teams.', 'hobc-management') . '</p>';
-        // Additional content or tabs can be rendered here
-        echo '</div>';
+    public function render_dashboard() { ?>
+
+        <div class="wrap">
+            <h1><?php echo esc_html__('HOBC Dashboard', 'hobc-management') ?></h1>
+            <p><?php echo esc_html__('Manage badminton players and teams.', 'hobc-management') ?></p>
+
+            <!-- Additional content or tabs can be rendered here -->
+        </div>
+
+        <?php
     }
 }
