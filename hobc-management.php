@@ -64,6 +64,16 @@ final class HOBC_Management{
         global $wp_rewrite;
         $wp_rewrite->set_permalink_structure('/%postname%/');
         $wp_rewrite->flush_rules();
+
+        add_role(
+            'player',
+            __('Player', 'hobc-management'),
+            [
+                'read' => true,
+                'edit_posts' => false,
+                'delete_posts' => false,
+            ]
+        );
     }
 
     public function add_action_links( $links, $file ){
