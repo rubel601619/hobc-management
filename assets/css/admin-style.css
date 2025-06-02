@@ -1,0 +1,9 @@
+.align-label{
+    display: flex;
+    align-items:center;
+    gap: .4rem;
+    user-select: none;
+}
+.align-label input[type="checkbox"]{
+    margin: 0;
+}
