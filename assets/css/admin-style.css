@@ -7,3 +7,16 @@
 .align-label input[type="checkbox"]{
     margin: 0;
 }
+
+
+@media (pointer: coarse) {
+  .custom-row-action {
+   position: inherit !important;
+  }
+}
+.ms-2 {
+    margin-left: 10px !important;
+}
+.mb-3{
+    margin-bottom: 1rem !important;
+}
