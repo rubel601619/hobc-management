@@ -25,6 +25,7 @@ class HOBC_Admin {
 
     public function hobc_register_settings(){
         register_setting('hobc_settings_group', 'player_per_page');
+        register_setting('hobc_settings_group', 'hobc_enable_pagination');
     }
     
 
@@ -108,14 +109,14 @@ class HOBC_Admin {
 
         wp_enqueue_style(
             'hobc-admin-style',
-            plugin_dir_url(__FILE__) . '../css/admin-style.css',
+            HOBC_PLUGIN_URL. 'assets/css/admin-style.css',
             [],
             '1.0.0'
         );
 
         wp_enqueue_script(
             'hobc-admin-script',
-            plugin_dir_url(__FILE__) . '../js/admin-script.js',
+            HOBC_PLUGIN_URL . 'assets/js/admin-script.js',
             ['jquery'],
             '1.0.0',
             true
