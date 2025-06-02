@@ -10,7 +10,23 @@ class HOBC_Admin {
         add_action('admin_menu', [$this, 'register_admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('init', [$this, 'register_events']);
+        add_action('admin_init', [ $this, 'hobc_register_settings' ] ) ;
+
+        add_action('admin_notices', [ $this, 'render_admin_notice' ] );
     }
+
+    public function render_admin_notice(){
+        if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
+            echo '<div class="notice notice-success is-dismissible">
+                    <p><strong>Settings saved successfully.</strong></p>
+                </div>';
+        }
+    }
+
+    public function hobc_register_settings(){
+        register_setting('hobc_settings_group', 'player_per_page');
+    }
+    
 
     /**
      * register custom post type for menu events
@@ -113,9 +129,11 @@ class HOBC_Admin {
 
         <div class="wrap">
             <h1><?php echo esc_html__('HOBC Dashboard', 'hobc-management') ?></h1>
-            <p><?php echo esc_html__('Manage badminton players and teams.', 'hobc-management') ?></p>
 
-            <!-- Additional content or tabs can be rendered here -->
+            <?php
+                include HOBC_PLUGIN_PATH . 'views/admin/render-general-settings.php';
+            ?>
+            
         </div>
 
         <?php
