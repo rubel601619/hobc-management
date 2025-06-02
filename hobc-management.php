@@ -205,7 +205,7 @@ final class HOBC_Management{
 
         $this->upload_profile( $user_id );
         
-        echo '<div style="color:green;">Registration successful! You can now log in.</div>';
+        echo '<div class="success">Registration successful! You can now log in.</div>';
 
     }
 

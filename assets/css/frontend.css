@@ -122,3 +122,36 @@
     background-color: #4DA8DA;
     color: white;
 }
+
+
+/***********************************************/
+/**************** Register form ****************/
+/***********************************************/
+.success {
+    color: green;
+    background: #e7ffe7;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid green;
+    /* box-shadow: 0 0 5px 0px black; */
+    margin-bottom: 1rem;
+}
+.item-row{
+    --row-gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--row-gap);
+    margin-bottom: var(--row-gap);
+}
+.item-row .regponsive-item,
+.item-row p{
+    background-color: #f8f9fa;
+    border: 1px solid var(--hobc-border-color);
+    padding: 20px;
+    width: 100%;
+    margin: 0;
+}
+@media(width > 576px){
+    .item-row .regponsive-item{
+        width: calc(50% - calc(var(--row-gap) / 2));
+    }
+}
