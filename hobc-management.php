@@ -35,8 +35,92 @@ final class HOBC_Management{
 
         // user register
         add_shortcode('hobc_registration_form', [ $this, 'user_register' ] );
+
+        // render players
+        add_shortcode('hobc_players', [ $this, 'render_players' ] );
+
+        // enqueue frontend style and scripts
+        add_action('wp_enqueue_scripts', [ $this, 'enqueue_fontend_scripts' ], 15 );
+    }
+    
+    /**
+     * render_players()
+     * 
+     * This method render the players list
+     * 
+     * @param $atts attributes of shortcode
+     * 
+     * @return Player list
+     */
+    public function render_players( $atts ){
+        $atts = shortcode_atts(
+            [
+                'per_page' => 5,
+            ],
+            $atts
+        );
+
+        $paged = max(1, get_query_var('paged') ?: get_query_var('page') ?: 1);
+        $per_page = intval($atts['per_page']);
+
+        $args = [
+            'role'    => 'player',
+            'orderby' => 'registered',
+            'order'   => 'DESC',
+            'number'  => $per_page,
+            'offset'  => ($paged - 1) * $per_page,
+        ];
+
+        $players = get_users($args);
+        $total_players = count(get_users(['role' => 'player', 'fields' => 'ID']));
+
+        if (empty($players)) {
+            return '<p>No players found.</p>';
+        }
+
+        ob_start();
+
+        echo '<div class="hobc-player-list">';
+
+        foreach ($players as $player) {
+            $user_id = $player->ID;
+            $name = $player->display_name;
+            $category = get_user_meta($user_id, 'hobc_category', true);
+            $contact = get_user_meta($user_id, 'hobc_contact', true);
+            $club_team = get_user_meta($user_id, 'hobc_club_team', true);
+            $terms = get_user_meta($user_id, 'hobc_terms', true);
+            $image_id = get_user_meta($user_id, 'hobc_profile_image', true);
+            $image_url = $image_id ? wp_get_attachment_url($image_id) : 'https://via.placeholder.com/150';
+
+            include plugin_dir_path(__FILE__) . 'views/player-list.php';
+        }
+
+        echo '</div>';
+
+        // Pagination
+        $total_pages = ceil($total_players / $per_page);
+        $current_url = remove_query_arg('paged');
+
+        include plugin_dir_path(__FILE__) . 'views/player-list-pagination.php';
+
+        return ob_get_clean();
     }
 
+    /**
+     * enqueue_fontend_scripts()
+     * 
+     * This method enqueue the frontend style and scripts.
+     * 
+     * @return void
+     */
+    public function enqueue_fontend_scripts(){
+         wp_enqueue_style(
+            'hobc-frontend-style',
+            plugin_dir_url(__FILE__) . 'assets/css/frontend.css',
+            array(), // Dependencies
+            '1.0.0'
+        );
+    }
 
     /**
      * user_register()
