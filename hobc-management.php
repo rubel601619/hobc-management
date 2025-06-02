@@ -58,6 +58,10 @@ final class HOBC_Management{
     public function render_players( $atts ){
 
         $per_page = get_option('player_per_page', 10);
+        $pagination = get_option('hobc_enable_pagination', 1);
+        if( !$pagination ){
+            $per_page = -1;
+        }
 
         $atts = shortcode_atts(
             [
@@ -107,7 +111,9 @@ final class HOBC_Management{
         $total_pages = ceil($total_players / $per_page);
         $current_url = remove_query_arg('paged');
 
-        include plugin_dir_path(__FILE__) . 'views/player-list-pagination.php';
+        if( $pagination ){
+            include plugin_dir_path(__FILE__) . 'views/player-list-pagination.php';
+        }
 
         return ob_get_clean();
     }
