@@ -100,7 +100,7 @@ final class HOBC_Management{
             $club_team = get_user_meta($user_id, 'hobc_club_team', true);
             $terms = get_user_meta($user_id, 'hobc_terms', true);
             $image_id = get_user_meta($user_id, 'hobc_profile_image', true);
-            $image_url = $image_id ? wp_get_attachment_url($image_id) : 'https://via.placeholder.com/150';
+            $image_url = $image_id ? wp_get_attachment_url($image_id) : HOBC_PLUGIN_URL . 'assets/img/placeholder-player.jpg';
 
             include plugin_dir_path(__FILE__) . 'views/player-list.php';
         }
