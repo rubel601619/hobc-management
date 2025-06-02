@@ -8,19 +8,32 @@ class HOBC_Admin {
 
     public function __construct() {
 
+        // register admin menu
         add_action('admin_menu', [$this, 'register_admin_menu']);
 
+        // enqueue admin script adn style
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
 
+        // register custom post type
         add_action('init', [$this, 'register_events']);
 
-        add_action('admin_init', [ $this, 'hobc_register_settings' ] ) ;
+        // register settings
+        add_action('admin_init', [ $this, 'register_settings' ] ) ;
 
+        // set admin notice
         add_action('admin_notices', [ $this, 'render_admin_notice' ] );
 
+        // delete player from admin 
         add_action('admin_init', [ $this, 'delete_player' ] );
     }
 
+    /**
+     * render_admin_notice()
+     * 
+     * this methos render the notice.
+     * 
+     * @return void
+     */
     public function render_admin_notice(){
         if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
             echo '<div class="notice notice-success is-dismissible">
@@ -29,7 +42,15 @@ class HOBC_Admin {
         }
     }
 
-    public function hobc_register_settings(){
+
+    /**
+     * register_settings()
+     * 
+     * This method register global settings
+     * 
+     * @return void
+     */
+    public function register_settings(){
         register_setting('hobc_settings_group', 'player_per_page');
         register_setting('hobc_settings_group', 'hobc_enable_pagination');
     }
@@ -118,6 +139,8 @@ class HOBC_Admin {
      * display_players()
      * 
      * This methos render the players from admin dashboard.
+     * 
+     * @return void
      */
     public function display_players(){
         $paged    = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
@@ -183,6 +206,13 @@ class HOBC_Admin {
         echo '</div>';
     }
 
+    /**
+     * delete_player()
+     * 
+     * this method allow to dele the players
+     * 
+     * @return void
+     */
     public function delete_player(){
         if (isset($_GET['page'], $_GET['action'], $_GET['user_id']) 
             && $_GET['page'] === 'manage-players'
@@ -198,7 +228,11 @@ class HOBC_Admin {
     }
 
     /**
+     * enqueue_admin_assets()
+     * 
      * Enqueue styles and scripts for admin pages
+     * 
+     * @return void
      */
     public function enqueue_admin_assets($hook) {
         wp_enqueue_style(
@@ -212,8 +246,6 @@ class HOBC_Admin {
             return;
         }
 
-        
-
         wp_enqueue_script(
             'hobc-admin-script',
             HOBC_PLUGIN_URL . 'assets/js/admin-script.js',
@@ -224,7 +256,11 @@ class HOBC_Admin {
     }
 
     /**
+     * render_dashboard()
+     * 
      * Render the main dashboard page
+     * 
+     * @return void
      */
     public function render_dashboard() { ?>
 
