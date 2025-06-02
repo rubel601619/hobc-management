@@ -14,6 +14,7 @@ Domain Path: /lang
 defined('ABSPATH') || exit;
 
 define('HOBC_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('HOBC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Include core files
 require_once plugin_dir_path(__FILE__) . 'autoload.php';
