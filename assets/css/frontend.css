@@ -1,0 +1,93 @@
+:root{
+    --hobc-image-width: 14.25rem;
+    --hobc-image-gap: 0px;
+    --hobc-border-color: #dee2e6;
+    --hobc-space-between-list-pagination: 4rem;
+}
+.fw-bold{
+    font-weight: 600;
+}
+.hobc-player-list{
+    width: 100%;
+    padding-bottom: calc(var(--hobc-space-between-list-pagination) / 2);
+    margin-bottom: calc(var(--hobc-space-between-list-pagination) / 2);
+    border-bottom: 1px solid var(--hobc-border-color);
+}
+.hobc-player{
+    display: flex;
+    gap: var(--hobc-image-gap);
+    background-color: #f8f9fa;
+    border: 1px solid var(--hobc-border-color);
+}
+.hobc-player:not(:last-child){
+    margin-bottom: 15px;
+}
+.hobc-player .player-thumb{
+    width: var(--hobc-image-width);
+    border-right: 1px solid var(--hobc-border-color);
+    padding: 15px;
+    overflow: hidden;
+}
+.hobc-player .player-info{
+    width: calc(100% - calc(var(--hobc-image-width) + var(--hobc-image-gap)));
+    padding: 15px;
+    font-size: 0.9375rem;
+}
+
+.hobc-player .player-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hobc-player .player-info .player-name {
+    font-size: 1.225rem;
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+}
+
+.hobc-player .player-info > p:not(:last-child){
+    margin-bottom: 5px;
+}
+.hobc-player .player-info > p > span{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+}
+.hobc-player .player-info > p > span::after{
+    position: absolute;
+    right: 0;
+    content: ':';
+}
+
+/***********************************************/
+/****************** Pagination *****************/
+/***********************************************/
+
+.hobc-pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .2rem;
+    user-select: none;
+}
+.hobc-pagination > *{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    height: 32px;
+    min-width: 32px;
+    background-color: #dee2e6;
+    padding-inline: 5px;
+    color: #444;
+}
+.hobc-pagination .hobc-btn.disabled{
+    opacity: 0.5;
+}
+.hobc-pagination > *:not(.disabled):hover,
+.hobc-pagination .fw-bold{
+    background-color: #4DA8DA;
+    color: white;
+}
