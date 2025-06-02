@@ -1,5 +1,5 @@
 :root{
-    --hobc-image-width: 14.25rem;
+    --hobc-image-width: 12rem;
     --hobc-image-gap: 0px;
     --hobc-border-color: #dee2e6;
     --hobc-space-between-list-pagination: 4rem;
@@ -22,15 +22,19 @@
     gap: var(--hobc-image-gap);
     background-color: #f8f9fa;
     border: 1px solid var(--hobc-border-color);
+    transition: box-shadow 0.35s ease-in-out, background-color 0.35s ease-in-out;
+}
+.hobc-player:hover {
+    box-shadow: 0 0 18px 0 #a9a9a9;
+    background: white;
 }
 
 .hobc-player:not(:last-child){
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .hobc-player .player-thumb{
     width: 100%;
-    padding: 15px;
     border-bottom: 1px solid var(--hobc-border-color);
 }
 
@@ -43,13 +47,14 @@
 @media(width > 576px){
     .hobc-player .player-thumb{
         width: var(--hobc-image-width);
+        height: var(--hobc-image-width);
         border-right: 1px solid var(--hobc-border-color);
         border-bottom: 0;
         overflow: hidden;
     }
     .hobc-player .player-info{
         width: calc(100% - calc(var(--hobc-image-width) + var(--hobc-image-gap)));
-        padding: 15px;
+        padding: 20px;
     }
 }
 
@@ -67,6 +72,9 @@
 
 .hobc-player .player-info > p:not(:last-child){
     margin-bottom: 5px;
+}
+.hobc-player .player-info > p:last-child{
+    margin-bottom: 0;
 }
 
 .hobc-player .player-info > p > span{
