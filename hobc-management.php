@@ -55,9 +55,12 @@ final class HOBC_Management{
      * @return Player list
      */
     public function render_players( $atts ){
+
+        $per_page = get_option('player_per_page', 10);
+
         $atts = shortcode_atts(
             [
-                'per_page' => 5,
+                'per_page' => $per_page
             ],
             $atts
         );
